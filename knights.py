@@ -211,11 +211,11 @@ if __name__ == "__main__":
     knight_open = KnightsTour(board_size=8, closed_tour=False)
     
     if knight_open.solve_tour(start_x=0, start_y=0):
-        print("✓ Solution found for Open Tour!")
+        print("Solution found for Open Tour!")
         knight_open.print_board()
         knight_open.visualize()
     else:
-        print("✗ No solution found for Open Tour")
+        print("No solution found for Open Tour")
     
     # Situation b: Closed Tour
     print("\nSituation B: Closed Tour (returning to starting square)")
@@ -223,11 +223,8 @@ if __name__ == "__main__":
     knight_closed = KnightsTour(board_size=8, closed_tour=True)
     
     if knight_closed.solve_tour(start_x=0, start_y=0):
-        print("✓ Solution found for Closed Tour!")
+        print("Solution found for Closed Tour!")
         knight_closed.print_board()
         knight_closed.visualize()
     else:
-        print("✗ No solution found for Closed Tour")
-    
-    print("\nNote: You can change the starting position by modifying")
-    print("the start_x and start_y parameters in solve_tour()")
+        print("No solution found for Closed Tour")
