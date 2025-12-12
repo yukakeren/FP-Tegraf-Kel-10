@@ -8,7 +8,6 @@ def dfs(index, current, depth):
 
     print("  " * depth + f"{current}")
 
-    # Update LIS terbaik
     if len(current) > semuaBest_len:
         semuaBest_len = len(current)
         semuaBest_list = [current[:]]     
@@ -25,4 +24,5 @@ dfs(0, [], 0)
 print("\n============================")
 print("Jumlah semua LIS dengan panjang maksimum =", semuaBest_len)
 for lis in semuaBest_list:
+
     print(lis)
