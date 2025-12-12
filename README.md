@@ -1,54 +1,69 @@
-# TUGAS PRAKTIKUM - THE KNIGHT'S TOUR
+# Tugas Praktikum - The Knight's Tour Problem
 
 ## Deskripsi Masalah
 
-Jika sebuah bidak kuda diletakkan pada sebarang kotak untuk kemudian melakukan perjalanan (dengan cara pergerakan kuda) mengunjungi ke semua (8 × 8) kotak papan catur.
+Sebuah bidak kuda diletakkan pada sebarang kotak di papan catur berukuran 8 × 8. Kuda tersebut harus melakukan perjalanan dengan aturan pergerakan kuda dalam catur (berbentuk L) untuk mengunjungi semua kotak pada papan.
 
-Jika diinginkan situasi bahwa kuda tsb dapat:
-- **a. Mengakhiri perjalanan di sebarang kotak (open tour)**
-- **b. Mengakhiri perjalanan pada attacking square (closed tour)**
+Terdapat dua situasi yang harus diselesaikan:
 
-## Algoritma
+a. **Open Tour** - Kuda mengakhiri perjalanan di sebarang kotak (tidak harus kembali ke posisi awal)
 
-Program ini menggunakan **Backtracking** dengan **Warnsdorff's Heuristic**:
-- **Backtracking**: Mencoba semua kemungkinan pergerakan secara sistematis dan mundur jika menemui jalan buntu
-- **Warnsdorff's Heuristic**: Optimisasi dengan memilih kotak yang memiliki paling sedikit pilihan gerakan selanjutnya, mengurangi kemungkinan jalan buntu
+b. **Closed Tour** - Kuda mengakhiri perjalanan pada attacking square, yaitu kotak yang memungkinkan kuda kembali ke posisi awal dengan satu gerakan
 
-## Fitur
+## Solusi yang Diimplementasikan
 
-- ✅ Open Tour: Kuda mengunjungi semua kotak tanpa harus kembali ke awal
-- ✅ Closed Tour: Kuda mengunjungi semua kotak dan dapat kembali ke awal
-- ✅ Visualisasi grafis dengan matplotlib
-- ✅ Tracking waktu solusi
-- ✅ Dapat memilih posisi awal arbitrary
-- ✅ Support berbagai ukuran papan
+### Algoritma
+
+Program ini mengimplementasikan algoritma **Backtracking** yang dikombinasikan dengan **Warnsdorff's Heuristic** untuk menemukan solusi Knight's Tour secara efisien.
+
+#### Backtracking
+Algoritma backtracking akan mencoba semua kemungkinan pergerakan kuda secara sistematis. Jika menemui jalan buntu (dead end), algoritma akan mundur dan mencoba jalur alternatif lainnya.
+
+#### Warnsdorff's Heuristic
+Sebagai optimisasi, digunakan Warnsdorff's heuristic yang memprioritaskan perpindahan ke kotak yang memiliki lebih sedikit pilihan gerakan selanjutnya. Strategi greedy ini terbukti efektif mengurangi kemungkinan jalan buntu dan mempercepat pencarian solusi.
+
+### Implementasi
+
+Program terdiri dari class `KnightsTour` dengan method-method berikut:
+
+- `__init__(board_size, closed_tour)` - Inisialisasi solver dengan ukuran papan dan tipe tour
+- `solve_tour(start_x, start_y)` - Mencari solusi dengan posisi awal tertentu
+- `visualize(save_fig, filename)` - Membuat visualisasi grafis dari solusi
+- `print_board()` - Menampilkan solusi dalam bentuk matriks di console
+- `get_path_coordinates()` - Mendapatkan koordinat jalur yang dilalui
+
+### Fitur Program
+
+- Solusi untuk Open Tour dan Closed Tour
+- Visualisasi jalur pergerakan kuda pada papan catur
+- Tracking waktu komputasi untuk menemukan solusi
+- Fleksibilitas memilih posisi awal
+- Mendukung berbagai ukuran papan (tidak hanya 8x8)
 
 ## Cara Menggunakan
 
-### 1. Menjalankan File Python
+### Menjalankan Program Python
 
+Jalankan file utama dengan perintah:
 ```bash
 python knights.py
 ```
 
-### 2. Menggunakan Jupyter Notebook
+Program akan secara otomatis menyelesaikan kedua situasi (open tour dan closed tour) dan menampilkan visualisasinya.
 
-Buka file `knights_tour.ipynb` untuk versi interaktif dengan penjelasan lengkap.
+### Menggunakan Jupyter Notebook
 
-## Struktur Kode
+Untuk eksplorasi lebih interaktif dengan penjelasan detail, buka file:
+```
+knights_tour.ipynb
+```
 
-### Class `KnightsTour`
-
-**Methods:**
-- `__init__(board_size, closed_tour)`: Initialize solver
-- `solve_tour(start_x, start_y)`: Mencari solusi Knight's Tour
-- `visualize(save_fig, filename)`: Visualisasi solusi dengan matplotlib
-- `print_board()`: Cetak solusi di console
-- `get_path_coordinates()`: Dapatkan koordinat jalur
+Notebook ini berisi penjelasan algoritma, implementasi bertahap, dan berbagai eksperimen dengan ukuran papan yang berbeda.
 
 ## Contoh Output
 
-### Open Tour
+Program akan menghasilkan output berupa matriks yang menunjukkan urutan kunjungan kuda:
+
 ```
 OPEN TOUR - Knight's Tour Solution:
 =================================
@@ -64,43 +79,53 @@ OPEN TOUR - Knight's Tour Solution:
 Solution time: 0.0023 seconds
 ```
 
-### Visualisasi
-Program akan menampilkan visualisasi grafis dengan:
-- Papan catur dengan pola warna
-- Nomor urutan setiap langkah
-- Garis merah menunjukkan jalur
-- Penanda hijau untuk posisi awal
-- Penanda biru untuk posisi akhir
-- Garis putus-putus untuk closed tour (kembali ke awal)
+Selain itu, program juga akan menampilkan visualisasi grafis yang menunjukkan:
+- Papan catur dengan warna alternatif
+- Nomor urutan di setiap kotak yang dikunjungi
+- Garis merah yang menggambarkan jalur pergerakan
+- Marker hijau untuk posisi awal
+- Marker biru untuk posisi akhir
+- Untuk closed tour, garis putus-putus dari posisi akhir kembali ke awal
 
-## Kompleksitas
+## Analisis Kompleksitas
 
-- **Kompleksitas Waktu**: O(8^(n²)) dalam worst case, tetapi Warnsdorff's heuristic secara signifikan mengurangi waktu eksekusi
-- **Kompleksitas Ruang**: O(n²) untuk menyimpan papan
+**Kompleksitas Waktu:** 
+Dalam worst case, kompleksitas adalah O(8^(n²)) karena setiap kotak memiliki maksimal 8 pilihan gerakan. Namun dengan Warnsdorff's heuristic, waktu eksekusi praktis jauh lebih cepat.
 
-## Requirements
+**Kompleksitas Ruang:** 
+O(n²) untuk menyimpan state papan dan rekursi.
 
+## Dependencies
+
+Library yang dibutuhkan:
 ```
-matplotlib
-numpy
+matplotlib >= 3.5.0
+numpy >= 1.21.0
 ```
 
-Install dependencies:
+Instalasi:
+```bash
+pip install -r requirements.txt
+```
+
+atau manual:
 ```bash
 pip install matplotlib numpy
 ```
 
-## Catatan
+## Catatan Pengembangan
 
-- Closed tour lebih sulit ditemukan dibanding open tour karena constraint tambahan
-- Posisi awal mempengaruhi waktu pencarian solusi
-- Untuk papan berukuran kecil (< 5×5), solusi mungkin tidak ada
+Beberapa hal yang perlu diperhatikan:
 
-## Author
+1. Closed tour memiliki constraint yang lebih ketat sehingga waktu pencarian bisa lebih lama dibanding open tour
 
-Tugas Praktikum Tegraf - Kelompok 10
+2. Posisi awal berpengaruh terhadap waktu pencarian - posisi di sudut atau tepi cenderung lebih cepat
 
-## License
+3. Untuk papan dengan ukuran kecil (di bawah 5x5), kemungkinan tidak ada solusi yang valid
 
-MIT License
+4. Algoritma ini deterministik untuk input yang sama akan menghasilkan solusi yang sama
+
+## Kelompok 10
+
+Tugas Praktikum Teknik Grafika
 
