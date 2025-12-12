@@ -246,3 +246,175 @@ Dalam worst case, kompleksitas adalah O(8^(n²)) karena setiap kotak memiliki ma
 **Kompleksitas Ruang:** 
 O(n²) untuk menyimpan state papan dan rekursi.
 
+# Tugas Praktikum - Largest Monotonically Increasing Subsequence
+
+## How to run
+For LMIS problem, simply `python3 LMIS.py` to run or .ipynb.
+
+## Deskripsi Masalah
+
+Mencari Largest Monotonically Increasing Subsequence (LMIS) dari sebuah urutan bilangan, yaitu subsequence terpanjang yang nilainya selalu meningkat secara monoton. Pada soal ini digunakan contoh data `4, 1, 13, 7, 0, 2, 8, 11, 3`.
+
+## Solusi yang Diimplementasikan
+
+### Algoritma
+
+Menggunakan **Tree Exploration** dengan **Depth First Search (DFS)**:
+## Tree Exploration**
+
+    Setiap elemen dalam array dianggap sebagai akar sebuah pohon subsequence. Kemudiaan dari setiap node, dibuat cabang ke elemen-elemen berikutnya yang nilainya lebih besar. Sehingga seluruh kemungkinan subsequence meningkat dapat dieksplorasi.
+
+## Depth First Search (DFS)**
+
+    Menelusuri setiap jalur subsequence secara rekursif hingga tidak ada lagi elemen yang bisa ditambahkan. Ketika mencapai ujung jalur maka subsequence dicatat, lalu proses kembali ke node sebelumnya (backtracking) untuk mengeksplorasi jalur lain.
+
+## Pewarnaan Level Tree
+Setiap level rekursi atau divisi tree diberi warna berbeda untuk mempermudah visualisasi.
+```
+COLORS = [
+    "\033[91m",  
+    "\033[92m",  
+    "\033[93m",  
+    "\033[94m",  
+    "\033[95m",  
+    "\033[96m",  
+    "\033[90m",  
+]
+RESET = "\033[0m"
+```
+
+### Implementasi
+
+Program terdiri dari class `LMISFinder` dengan method-method berikut:
+
+- `__init__(arr)` : Inisialisasi dengan input array
+- `dfs(index, current, depth)` : DFS untuk membangun semua subsequence yang monoton meningkat
+- `find_all_lis()` : Memulai pencarian seluruh LMIS dengan panjang maksimum
+
+### Fitur Program
+
+- Mendeteksi semua subsequence yang meningkat secara monoton dan memiliki panjang maksimum.
+- Menampilkan proses DFS dengan jalur subsequence pada setiap level.
+- Setiap level diberi warna berbeda untuk mempermudah pemahaman alur pencarian.
+- Ketika suatu jalur tidak bisa diperpanjang, program akan mundur (backtrack) dan mencoba jalur lain.
+- Bisa digunakan untuk list angka berapapun panjangnya.
+- Hanya perlu membuat instance LMISFinder dengan array input, lalu panggil `find_all_lis()` untuk mendapatkan hasil.
+- Menampilkan semua LMIS yang ditemukan dan panjang maksimum.
+- Mempermudah analisis subsequence pada data numerik.
+
+## Cara Menggunakan
+
+### Menjalankan Program Python
+
+Jalankan file utama dengan perintah:
+```bash
+python LMIS.py
+```
+
+Program akan secara otomatis menyelesaikan permasalahan dalam soal dan menampilkan visualisasinya.
+
+### Menggunakan Jupyter Notebook
+
+Untuk eksplorasi lebih interaktif dengan penjelasan detail, buka file:
+```
+LMIS.ipynb
+```
+
+Notebook ini berisi penjelasan algoritma dan implementasi bertahap.
+
+## Input dan Output
+
+### Input
+
+Program menerima input berupa list angka yang akan dianalisis untuk mencari subsequence meningkat terpanjang. Input diberikan saat membuat instance kelas LMISFinder.
+
+**Parameter Inisialisasi** (`LMISFinder`)
+
+`arr (list of int)`: List angka input yang akan dicari subsequence meningkatnya.
+Contoh:
+```
+input_angka = [4, 1, 13, 7, 0, 2, 8, 11, 3]
+finder = LMISFinder(input_angka)
+```
+**Parameter Pencarian LMIS** (`find_all_lis`)
+
+Tidak membutuhkan input tambahan. Method ini akan memulai DFS dari indeks 0 dan menelusuri seluruh kemungkinan subsequence.
+Contoh Pemanggilan:
+```
+all_lis, panjang = finder.find_all_lis()
+```
+- `all_lis` → daftar semua LMIS dengan panjang maksimum
+- `panjang` → panjang LMIS maksimum yang ditemukan
+
+### Output
+```
+[]
+  [4]
+    [4, 13]
+    [4, 7]
+      [4, 7, 8]
+        [4, 7, 8, 11]
+      [4, 7, 11]
+    [4, 8]
+      [4, 8, 11]
+    [4, 11]
+  [1]
+    [1, 13]
+    [1, 7]
+      [1, 7, 8]
+        [1, 7, 8, 11]
+      [1, 7, 11]
+    [1, 2]
+      [1, 2, 8]
+        [1, 2, 8, 11]
+      [1, 2, 11]
+      [1, 2, 3]
+    [1, 8]
+      [1, 8, 11]
+    [1, 11]
+    [1, 3]
+  [13]
+  [7]
+    [7, 8]
+      [7, 8, 11]
+    [7, 11]
+  [0]
+    [0, 2]
+      [0, 2, 8]
+        [0, 2, 8, 11]
+      [0, 2, 11]
+      [0, 2, 3]
+    [0, 8]
+      [0, 8, 11]
+    [0, 11]
+    [0, 3]
+  [2]
+    [2, 8]
+      [2, 8, 11]
+    [2, 11]
+    [2, 3]
+  [8]
+    [8, 11]
+  [11]
+  [3]
+
+============================
+Jumlah semua LMIS dengan panjang maksimum = 4
+[4, 7, 8, 11]
+[1, 7, 8, 11]
+[1, 2, 8, 11]
+[0, 2, 8, 11]
+```
+
+Program menampilkan visualisasi menggunakan pewarnaan yang berbeda disetiap levelnya:
+
+1. **Proses DFS**: Jalur subsequence yang sedang dibangun, tiap level diberi warna berbeda.
+2. **LMIS Terpanjang**: Semua subsequence dengan panjang maksimum dicetak lengkap.
+
+## Analisis Kompleksitas
+
+**Kompleksitas Waktu:** 
+Dalam worst case, kompleksitas adalah O(2ⁿ) karena seluruh subset diperiksa. Namun, pruning alami terjadi karena hanya nilai yang lebih besar yang dipertimbangkan.
+
+**Kompleksitas Ruang:** 
+O(n) untuk kedalaman rekursi serta penyimpanan subsequence terbaik.
